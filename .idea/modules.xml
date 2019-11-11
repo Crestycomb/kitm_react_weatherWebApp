@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/my-app fresh.iml" filepath="$PROJECT_DIR$/.idea/my-app fresh.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/kitm_react_weatherWebApp.iml" filepath="$PROJECT_DIR$/.idea/kitm_react_weatherWebApp.iml" />
     </modules>
   </component>
 </project>

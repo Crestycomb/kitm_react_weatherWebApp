@@ -24,14 +24,17 @@ function Square(props) {
 
 class ApiStuff extends Component {
     constructor() {
-        super()
+        super();
         this.state = {
-            data: null
+            data: {},
+            hasErrors: null,
+            isLoaded: false,
+            planets: {}
         };
     }
 
-
-    startPoint = "https://cors-anywhere.herokuapp.com/https://api.meteo.lt/v1/";
+    cors = "https://cors-anywhere.herokuapp.com/";
+    startPoint = "https://api.meteo.lt/v1/";
     places = "places/"
     currentLocation = "vilnius/";
     forecasts = "forecasts/";
@@ -43,17 +46,54 @@ class ApiStuff extends Component {
 
         stuff to change the forecast place would go here
     */
-
-
+/*
+    working example
     componentDidMount() {
-        let endpoint = this.startPoint + this.places + this.currentLocation + this.forecasts + this.forecastType
-        fetch(endpoint)
-            .then(response => response.json())
-            .then(data => this.setState({ hits: data.hits }));
+        fetch("https://swapi.co/api/planets/4/")
+            .then(res => res.json())
+            .then(res => this.setState({ planets: res }))
+            .catch(() => this.setState({ hasErrors: true }));
 
-        console.log(this.state.data);
 
     }
+*/
+
+
+    // not really working...
+    componentDidMount() {
+        let endpoint = this.cors + this.startPoint + this.places + this.currentLocation + this.forecasts + this.forecastType;
+        fetch(endpoint)
+            .then(res => res.json())
+            .then(res => this.setState({ data: res }))
+            .catch(() => this.setState({ hasErrors: true }));
+    }
+
+
+
+/*
+    componentDidMount() {
+        let endpoint = this.cors + this.startPoint + this.places + this.currentLocation + this.forecasts + this.forecastType;
+        fetch(endpoint)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                        data: result.data
+                    });
+                },
+                // Note: it's important to handle errors here
+                // instead of a catch() block so that we don't swallow
+                // exceptions from actual bugs in components.
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
+    }
+*/
 
     renderWeatherCard(i) {
         return <Square
@@ -66,7 +106,8 @@ class ApiStuff extends Component {
         return (
 
             <div className="col">
-                <p>fdkfoads</p>
+                <p>{this.state.planets.name}</p>
+                <p>{this.state.data.forecastType}</p>
             </div>
 
         )
