@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import styles from './main.css';
 
 function Main() {
@@ -15,7 +15,7 @@ function Main() {
 }
 
 function Square(props) {
-    return(
+    return (
         <div className="col">
 
         </div>
@@ -23,16 +23,16 @@ function Square(props) {
 }
 
 class ApiStuff extends Component {
-    constructor(){
+    constructor() {
         super()
-        this.state={
-
+        this.state = {
+            data: null
         };
     }
 
 
     startPoint = "https://cors-anywhere.herokuapp.com/https://api.meteo.lt/v1/";
-    places="places/"
+    places = "places/"
     currentLocation = "vilnius/";
     forecasts = "forecasts/";
     forecastType = "long-term/";
@@ -45,15 +45,13 @@ class ApiStuff extends Component {
     */
 
 
-    componentWillMount() {
-        let endpoint = this.startPoint+this.places+this.currentLocation+this.forecasts+this.forecastType
+    componentDidMount() {
+        let endpoint = this.startPoint + this.places + this.currentLocation + this.forecasts + this.forecastType
         fetch(endpoint)
-            .then((response =>{
-                return response.json();
-            }))
-            .then(data=>{
-                let output = "<h3></h3>"
-            })
+            .then(response => response.json())
+            .then(data => this.setState({ hits: data.hits }));
+
+        console.log(this.state.data);
 
     }
 
@@ -65,7 +63,7 @@ class ApiStuff extends Component {
     }
 
     render() {
-        return(
+        return (
 
             <div className="col">
                 <p>fdkfoads</p>
