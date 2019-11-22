@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6f092289-88ff-4d15-b901-a5fba0086753" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/app/app.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/app/app.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/main/main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/main/main.jsx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -46,12 +47,13 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="1f90c448-a8c8-4352-8b2c-fd51ace4dab5" name="Default Changelist" comment="" />
+      <changelist id="6f092289-88ff-4d15-b901-a5fba0086753" name="Default Changelist" comment="" />
       <created>1573490243673</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1573490243673</updated>
       <workItem from="1573490246916" duration="5373000" />
+      <workItem from="1574426882731" duration="9539000" />
     </task>
     <servers />
   </component>
