@@ -29,21 +29,19 @@ class ApiStuff extends Component {
             data: {},
             hasErrors: null,
             isLoaded: false,
-            planets: {}
+            planets: {},
+            randomP: <h2> thingy</h2>
         };
     }
 
     cors = "https://cors-anywhere.herokuapp.com/";
     startPoint = "https://api.meteo.lt/v1/";
-    places = "places/"
+    places = "places/";
     currentLocation = "vilnius/";
     forecasts = "forecasts/";
     forecastType = "long-term/";
 
     /*
-
-
-
         stuff to change the forecast place would go here
     */
 /*
@@ -58,13 +56,12 @@ class ApiStuff extends Component {
     }
 */
 
-
-    // not really working...
     componentDidMount() {
         let endpoint = this.cors + this.startPoint + this.places + this.currentLocation + this.forecasts + this.forecastType;
         fetch(endpoint)
             .then(res => res.json())
             .then(res => this.setState({ data: res }))
+            .then(randomP => this.setState({randomP: this.state.data.place.code }))
             .catch(() => this.setState({ hasErrors: true }));
     }
 
@@ -104,10 +101,9 @@ class ApiStuff extends Component {
 
     render() {
         return (
-
             <div className="col">
-                <p>{this.state.planets.name}</p>
                 <p>{this.state.data.forecastType}</p>
+                <p>{this.state.randomP}</p>
             </div>
 
         )
