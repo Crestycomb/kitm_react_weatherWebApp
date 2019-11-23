@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import styles from './header.css';
+import { Link } from 'react-router-dom';
+
 function Header() {
 
     return (
@@ -13,6 +15,7 @@ function Header() {
                 <div className="col">
                     <SearchForm/>
                 </div>
+
             </div>
 
         </header>
