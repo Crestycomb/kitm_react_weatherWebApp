@@ -59,7 +59,7 @@ class App extends Component {
                 <h5>CURRENT loc</h5>
 
 
-                <SearchForm/>
+                <NameForm/>
 
                 {this.state && this.state.data &&
                 <>
@@ -72,42 +72,37 @@ class App extends Component {
     }
 }
 
-class SearchForm extends Component {
-    constructor() {
-        super();
-        this.state = {
-            input: 0,
-            currencyValue: "f",
-        };
-        this.handleNumberChange = this.handleNumberChange.bind(this);
+
+class NameForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {value: ''};
+
+        this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-
-
-    render() {
-        return (
-            <form onSubmit={this.handleSubmit} className="form-inline">
-
-                <label>
-                    Currency
-                    <input type="text" value={this.state.input} onChange={this.handleNumberChange}/>
-                </label>
-                <input type="submit" value="Submit"/>
-            </form>
-        )
+    handleChange(event) {
+        this.setState({value: event.target.value});
     }
 
-    handleNumberChange = function (e) {
-        this.setState({currencyValue: e.target.value});
-    };
-
     handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.currencyValue);
+        alert('A name was submitted: ' + this.state.value);
         event.preventDefault();
     }
 
+    render() {
+        return (
+            <form onSubmit={this.handleSubmit}>
+                <label>
+                    Name:
+                    <input type="text" value={this.state.value} onChange={this.handleChange} />
+                </label>
+                <input type="submit" value="Submit" />
+            </form>
+        );
+    }
+}
 
-};
 
 export default App;
