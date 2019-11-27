@@ -59,7 +59,7 @@ class App extends Component {
                 <h5>CURRENT loc</h5>
 
 
-                <NameForm/>
+                <NameForm callbackFromParent={this.myCallback}/>
 
                 {this.state && this.state.data &&
                 <>
@@ -70,25 +70,40 @@ class App extends Component {
             </div>
         );
     }
+
+    myCallback = (dataToParent) => {
+        this.setState({currentLocation: dataToParent + '/' });
+
+
+        let endpoint = this.cors + this.startPoint + this.places + this.state.currentLocation + this.forecasts + this.forecastType;
+        fetch(endpoint)
+            .then(res => res.json())
+            .then(res => this.setState({data: res}))
+            .catch(() => this.setState({hasErrors: true}));
+    }
 }
 
 
 class NameForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {value: ''};
+        this.state = {value: null};
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+
 
     handleChange(event) {
         this.setState({value: event.target.value});
     }
 
     handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.value);
         event.preventDefault();
+
+
+        this.setState({newValue: this.state.value});
+        this.props.callbackFromParent(this.state.newValue);
     }
 
     render() {
