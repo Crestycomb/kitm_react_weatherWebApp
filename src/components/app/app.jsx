@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Header from '../header/header';
 import Main from '../main/main';
+import LoadingSpinner from "../loadingSpinner/loadingSpinner";
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
 import styles from './app.css';
 
@@ -72,22 +73,27 @@ class App extends Component {
     }
 
     myCallback = (dataToParent) => {
-        this.setState({currentLocation: dataToParent + '/' });
+        let currentLocation = dataToParent + '/';
 
+        let endpoint = this.cors + this.startPoint + this.places + currentLocation + this.forecasts + this.forecastType;
 
-        let endpoint = this.cors + this.startPoint + this.places + this.state.currentLocation + this.forecasts + this.forecastType;
-        fetch(endpoint)
-            .then(res => res.json())
-            .then(res => this.setState({data: res}))
-            .catch(() => this.setState({hasErrors: true}));
+        const request = async () => {
+            const response = await fetch(endpoint);
+            const json = await response.json();
+            console.log(json);
+            await this.setState({data: json})
+        };
+        request();
     }
 }
-
 
 class NameForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {value: null};
+        this.state = {
+            value: '',
+            loading: false
+        };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -98,12 +104,24 @@ class NameForm extends React.Component {
         this.setState({value: event.target.value});
     }
 
+
     handleSubmit(event) {
+
+
+        this.setState(
+            {
+                newValue: this.state.value,
+                loading: true // enables loading spinner
+            }, () =>
+                this.props.callbackFromParent(this.state.newValue), // here is where you put the callback
+            this.setState({loading: false})    // should turn loading to false here somehow...
+
+
+        )
+        ;
+
         event.preventDefault();
 
-
-        this.setState({newValue: this.state.value});
-        this.props.callbackFromParent(this.state.newValue);
     }
 
     render() {
@@ -111,9 +129,14 @@ class NameForm extends React.Component {
             <form onSubmit={this.handleSubmit}>
                 <label>
                     Name:
-                    <input type="text" value={this.state.value} onChange={this.handleChange} />
+                    <input type="text" value={this.state.value} onChange={this.handleChange}/>
                 </label>
-                <input type="submit" value="Submit" />
+                <input type="submit" value="Submit"/>
+                {/*
+                  Check the status of the 'loading' variable. If true, then display
+                  the loading spinner. Otherwise, display the results.
+                */}
+                {this.state.loading ? <LoadingSpinner/> : <p>thingy goes here</p>}
             </form>
         );
     }
