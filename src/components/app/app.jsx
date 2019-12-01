@@ -12,62 +12,81 @@ class App extends Component {
     places = "places/";
     forecasts = "forecasts/";
     forecastType = "long-term/";
+    defaultLocation = "kaunas/";
 
     constructor() {
         super();
 
         this.state = {
-            currentLocation: "kaunas/",
             hasErrors: null,
         };
     }
 
     componentDidMount() {
-        let endpoint = this.cors + this.startPoint + this.places + this.state.currentLocation + this.forecasts + this.forecastType;
+        let endpoint = this.cors + this.startPoint + this.places + this.defaultLocation + this.forecasts + this.forecastType;
         fetch(endpoint)
             .then(res => res.json())
             .then(res => this.setState({data: res}))
+
             .catch(() => this.setState({hasErrors: true}));
     }
 
-    renderWeatherCardList(forecasts) {
-        return (
-            <div>
-                {
-                    forecasts.map((forecast) =>
-                        <>{this.renderWeatherCard(forecast)}</>
-                    )
+    //  sorts through data from API based on date
+    sortThroughData = data => {
+        console.log("sort data start");
+
+        console.log(data);
+        //  takes the first forecast time and sets it to 'today'
+        let today = data.forecastCreationTimeUtc.slice(0, 10);
+        console.log("today is: " + today);
+
+        //  goes through each forecast and places it into a new object
+        let singleDateForecasts = [
+            data,
+
+        ];
+
+
+        /*
+        for (const forecastIndex in data.forecastTimestamps) {
+
+
+            console.log(forecastIndex);
+            console.log(data.forecastTimestamps[forecastIndex]);
+
+
+            if (forecastIndex == 0) {
+                console.log("this should run the first loop...");
+                singleDateForecasts[0].date = today;
+                singleDateForecasts[0].forecast = data.forecastTimestamps[0];
+            } else {
+                //  if the dates dont match up, create a new iteration of the array
+                if (singleDateForecasts[singleDateForecasts.length - 1].date !== singleDateForecasts[singleDateForecasts.length - 2].date) {
+                    //singleDateForecasts[singleDateForecasts.length].date = data.forecastTimestamps[forecastIndex].forecastTimeUtc.slice(0, 10);
                 }
-            </div>
-        );
-    }
+            }
+            console.log(singleDateForecasts[singleDateForecasts.length-1].date)
 
-    renderWeatherCard(forecast) {
-        return (
-            <div className="bg-info w-25 float-left p-2 m-4">
-                <p>time: {forecast.forecastTimeUtc}</p>
-                <p>temp: {forecast.airTemperature}</p>
-                <p>precip: {forecast.totalPrecipitation}</p>
-                <p>direction: {forecast.windDirection}</p>
+            console.log("");
+        }
+        */
 
-            </div>
-        );
-    }
+        console.log("sort data end");
+    };
 
     render() {
         return (
             <div className="container-fluid bg-light    ">
-                <h5>CURRENT loc</h5>
-
-
                 <NameForm callbackFromParent={this.myCallback}/>
+
+                <h5>{this.state.defaultLocation}</h5>
 
                 {this.state && this.state.data &&
                 <>
                     <Main data={this.state.data}/>
+                    {this.sortThroughData(this.state.data)}
                 </>
                 }
-
             </div>
         );
     }
@@ -99,29 +118,18 @@ class NameForm extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-
     handleChange(event) {
         this.setState({value: event.target.value});
     }
 
-
     handleSubmit(event) {
-
-
         this.setState(
             {
                 newValue: this.state.value,
-                loading: true // enables loading spinner
             }, () =>
                 this.props.callbackFromParent(this.state.newValue), // here is where you put the callback
-            this.setState({loading: false})    // should turn loading to false here somehow...
-
-
-        )
-        ;
-
+        );
         event.preventDefault();
-
     }
 
     render() {
@@ -132,11 +140,6 @@ class NameForm extends React.Component {
                     <input type="text" value={this.state.value} onChange={this.handleChange}/>
                 </label>
                 <input type="submit" value="Submit"/>
-                {/*
-                  Check the status of the 'loading' variable. If true, then display
-                  the loading spinner. Otherwise, display the results.
-                */}
-                {this.state.loading ? <LoadingSpinner/> : <p>thingy goes here</p>}
             </form>
         );
     }

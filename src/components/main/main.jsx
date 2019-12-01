@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import styles from './main.css';
+import {BrowserRouter, Switch, Route} from 'react-router-dom'
+
 
 class Main extends Component {
     render() {
@@ -7,8 +9,9 @@ class Main extends Component {
             <>
                 <p>ayy lmao</p>
                 {/*renders all the small cards*/}
-                {this.renderWeatherCardList(this.props.data.forecastTimestamps)}
-
+                <main className="container-fluid">
+                    {this.renderWeatherCardList(this.props.data.forecastTimestamps)}
+                </main>
             </>
         )
     }
@@ -16,7 +19,7 @@ class Main extends Component {
     // renders the whole list of cards
     renderWeatherCardList(forecasts) {
         return (
-            <div>
+            <div className="row">
                 {
                     forecasts.map((forecast) =>
                         <>{this.renderWeatherCard(forecast)}</>
@@ -29,7 +32,7 @@ class Main extends Component {
     // renders a single weather card
     renderWeatherCard(forecast) {
         return (
-            <div className="bg-info w-25 float-left p-2 m-4">
+            <div className="col-1 bg-info p-1 m-2">
                 <p>time: {forecast.forecastTimeUtc}</p>
                 <p>temp: {forecast.airTemperature}</p>
                 <p>precip: {forecast.totalPrecipitation}</p>
