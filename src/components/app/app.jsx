@@ -93,7 +93,9 @@ class App extends Component {
             const response = await fetch(endpoint);
             const json = await response.json();
             console.log(json);
-            await this.setState({data: json})
+            await this.setState({data: json});
+            this.setState({sortedData: this.sortThroughData(this.state.data)})
+            
         };
         request();
     };
