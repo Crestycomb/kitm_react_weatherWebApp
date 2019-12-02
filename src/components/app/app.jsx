@@ -27,69 +27,62 @@ class App extends Component {
         fetch(endpoint)
             .then(res => res.json())
             .then(res => this.setState({data: res}))
-
+            .then(res => this.setState({sortedData: this.sortThroughData(this.state.data)}))
             .catch(() => this.setState({hasErrors: true}));
     }
 
+
     //  sorts through data from API based on date
     sortThroughData = data => {
-        console.log("sort data start");
-
-        console.log(data);
         //  takes the first forecast time and sets it to 'today'
         let today = data.forecastCreationTimeUtc.slice(0, 10);
         console.log("today is: " + today);
 
         //  goes through each forecast and places it into a new object
-        let singleDateForecasts = [
-            data,
-
-        ];
+        var forecastsSorted = [];
 
 
-        /*
-        for (const forecastIndex in data.forecastTimestamps) {
+        for (const i in data.forecastTimestamps) {
 
-
-            console.log(forecastIndex);
-            console.log(data.forecastTimestamps[forecastIndex]);
-
-
-            if (forecastIndex == 0) {
-                console.log("this should run the first loop...");
-                singleDateForecasts[0].date = today;
-                singleDateForecasts[0].forecast = data.forecastTimestamps[0];
+            // if its the first iteration of the loop, simply push the first set of
+            // data from data.forecastTimestamps into the array
+            if (i == 0) {
+                forecastsSorted.push(
+                    {
+                        date: data.forecastTimestamps[0].forecastTimeUtc.slice(0, 10),
+                        weekday: "Today",
+                        forecasts: [data.forecastTimestamps[0]]
+                    });
+                // if its not the first time:
             } else {
-                //  if the dates dont match up, create a new iteration of the array
-                if (singleDateForecasts[singleDateForecasts.length - 1].date !== singleDateForecasts[singleDateForecasts.length - 2].date) {
-                    //singleDateForecasts[singleDateForecasts.length].date = data.forecastTimestamps[forecastIndex].forecastTimeUtc.slice(0, 10);
+                // then check if the last forecasts date in our sorted array is
+                // the same to the next one in data.forecastTimestamps
+                if (forecastsSorted[forecastsSorted.length - 1].date === data.forecastTimestamps[i].forecastTimeUtc.slice(0, 10)) {
+                    // then add another forecast into our sorted arrays forecast object
+                    forecastsSorted[forecastsSorted.length - 1].forecasts.push(data.forecastTimestamps[i])
+                    // else push in a new element in the sortedForecasts array
+                } else {
+                    forecastsSorted.push(
+                        {
+                            date: data.forecastTimestamps[i].forecastTimeUtc.slice(0, 10),
+                            weekday: this.getDayOfWeek(data.forecastTimestamps[i].forecastTimeUtc.slice(0, 10)),
+                            forecasts: [data.forecastTimestamps[i]]
+                        }
+                    )
                 }
             }
-            console.log(singleDateForecasts[singleDateForecasts.length-1].date)
-
-            console.log("");
         }
-        */
 
-        console.log("sort data end");
+        console.log("result: ");
+        console.log(forecastsSorted);
+        return forecastsSorted;
     };
 
-    render() {
-        return (
-            <div className="container-fluid bg-light    ">
-                <NameForm callbackFromParent={this.myCallback}/>
-
-                <h5>{this.state.defaultLocation}</h5>
-
-                {this.state && this.state.data &&
-                <>
-                    <Main data={this.state.data}/>
-                    {this.sortThroughData(this.state.data)}
-                </>
-                }
-            </div>
-        );
-    }
+    // copypasta
+    getDayOfWeek = date => {
+        let dayOfWeek = new Date(date).getDay();
+        return isNaN(dayOfWeek) ? null : ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][dayOfWeek];
+    };
 
     myCallback = (dataToParent) => {
         let currentLocation = dataToParent + '/';
@@ -103,6 +96,23 @@ class App extends Component {
             await this.setState({data: json})
         };
         request();
+    };
+
+    render() {
+        return (
+            <div className="container-fluid bg-light    ">
+                <NameForm callbackFromParent={this.myCallback}/>
+
+                <h5>{this.state.defaultLocation}</h5>
+
+                {this.state && this.state.data &&
+                <>
+                    <Main data={this.state.data}/>
+
+                </>
+                }
+            </div>
+        );
     }
 }
 

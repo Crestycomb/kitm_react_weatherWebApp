@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7b13c0b7-c49e-4e8b-b41c-3d51e13d9393" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/app/app.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/app/app.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/main/main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/main/main.jsx" afterDir="false" />
@@ -20,6 +19,17 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="JsBowerSettings">
+    <node-interpreter value="project" />
+    <bower-package value="" />
+    <bower.json value="" />
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
+  </component>
   <component name="ProjectId" id="1TThy0samUCrrQBDS1S6xUELVBY" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -31,10 +41,16 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.jscs" value="true" />
+    <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.jscs" value="project" />
+    <property name="node.js.path.for.package.standard" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.jscs" value="" />
+    <property name="node.js.selected.package.standard" value="" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.general" />
+    <property name="settings.editor.selected.configurable" value="settings.javascript.linters.eslint" />
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -67,7 +83,8 @@
       <workItem from="1574869254645" duration="3486000" />
       <workItem from="1575060116775" duration="1601000" />
       <workItem from="1575193734073" duration="1127000" />
-      <workItem from="1575209670737" duration="3825000" />
+      <workItem from="1575209670737" duration="3900000" />
+      <workItem from="1575272887727" duration="7257000" />
     </task>
     <servers />
   </component>
@@ -88,9 +105,13 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state x="536" y="347" key="com.intellij.ide.util.TipDialog" timestamp="1575209672711">
+    <state x="341" y="166" key="SettingsEditor" timestamp="1575274742335">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="536" y="347" key="com.intellij.ide.util.TipDialog/0.0.1680.1050/-1378.376.1378.900@0.0.1680.1050" timestamp="1575209672711" />
+    <state x="341" y="166" key="SettingsEditor/0.0.1680.1050/-1378.376.1378.900@0.0.1680.1050" timestamp="1575274742335" />
+    <state x="536" y="347" key="com.intellij.ide.util.TipDialog" timestamp="1575272890326">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="536" y="347" key="com.intellij.ide.util.TipDialog/0.0.1680.1050/-1378.376.1378.900@0.0.1680.1050" timestamp="1575272890326" />
   </component>
 </project>

@@ -7,6 +7,8 @@ class Main extends Component {
     render() {
         return (
             <>
+
+
                 <p>ayy lmao</p>
                 {/*renders all the small cards*/}
                 <main className="container-fluid">
