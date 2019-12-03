@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+
 import Header from '../header/header';
 import Main from '../main/main';
 import LoadingSpinner from "../loadingSpinner/loadingSpinner";
@@ -12,21 +13,23 @@ class App extends Component {
     places = "places/";
     forecasts = "forecasts/";
     forecastType = "long-term/";
-    defaultLocation = "kaunas/";
 
     constructor() {
         super();
 
         this.state = {
             hasErrors: null,
+            currentLocation: "kaunas",
         };
     }
 
+    // initial fetch
     componentDidMount() {
-        let endpoint = this.cors + this.startPoint + this.places + this.defaultLocation + this.forecasts + this.forecastType;
+        let endpoint = this.cors + this.startPoint + this.places + this.state.currentLocation + '/' + this.forecasts + this.forecastType;
         fetch(endpoint)
             .then(res => res.json())
             .then(res => this.setState({data: res}))
+            // Im clueless so Im still using this useless arrow function
             .then(res => this.setState({sortedData: this.sortThroughData(this.state.data)}))
             .catch(() => this.setState({hasErrors: true}));
     }
@@ -38,9 +41,7 @@ class App extends Component {
         let today = data.forecastCreationTimeUtc.slice(0, 10);
         console.log("today is: " + today);
 
-        //  goes through each forecast and places it into a new object
-        var forecastsSorted = [];
-
+        let forecastsSorted = [];
 
         for (const i in data.forecastTimestamps) {
 
@@ -72,9 +73,8 @@ class App extends Component {
                 }
             }
         }
-
-        console.log("result: ");
-        console.log(forecastsSorted);
+        // console.log("result: ");
+        // console.log(forecastsSorted);
         return forecastsSorted;
     };
 
@@ -86,6 +86,7 @@ class App extends Component {
 
     myCallback = (dataToParent) => {
         let currentLocation = dataToParent + '/';
+        this.setState({currentLocation: dataToParent})
 
         let endpoint = this.cors + this.startPoint + this.places + currentLocation + this.forecasts + this.forecastType;
 
@@ -95,7 +96,7 @@ class App extends Component {
             console.log(json);
             await this.setState({data: json});
             this.setState({sortedData: this.sortThroughData(this.state.data)})
-            
+
         };
         request();
     };
@@ -105,12 +106,16 @@ class App extends Component {
             <div className="container-fluid bg-light    ">
                 <NameForm callbackFromParent={this.myCallback}/>
 
-                <h5>{this.state.defaultLocation}</h5>
+                <h5>{this.state.currentLocation}</h5>
 
-                {this.state && this.state.data &&
+
+                {/*only renders this component if it has the data*/}
+                {this.state && this.state.sortedData &&
                 <>
-                    <Main data={this.state.data}/>
-
+                    <Main
+                        data={this.state.data}
+                        sortedData={this.state.sortedData}
+                    />
                 </>
                 }
             </div>

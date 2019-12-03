@@ -8,23 +8,50 @@ class Main extends Component {
         return (
             <>
 
+                {/*create router*/}
 
-                <p>ayy lmao</p>
+                {this.renderWeekDayCards(this.props.sortedData)}
+
                 {/*renders all the small cards*/}
                 <main className="container-fluid">
-                    {this.renderWeatherCardList(this.props.data.forecastTimestamps)}
+                    {/* this.renderWeatherCardListTemp(this.props.data.forecastTimestamps) */}
                 </main>
             </>
         )
     }
 
+
+    renderSingleDayCard(weekday, date) {
+        return (
+
+            <div className="float-left w-25 bg-secondary p-2">
+                {weekday} {date.slice(5, 10)}
+            </div>
+
+        )
+    }
+
+    renderWeekDayCards(sortedData) {
+        return (
+            <>
+                {
+                    sortedData.map((day) => {
+                            return this.renderSingleDayCard(day.weekday, day.date)
+                        }
+                    )
+                }
+            </>
+        )
+    }
+
+
     // renders the whole list of cards
-    renderWeatherCardList(forecasts) {
+    renderWeatherCardListTemp(forecasts) {
         return (
             <div className="row">
                 {
                     forecasts.map((forecast) =>
-                        <>{this.renderWeatherCard(forecast)}</>
+                        <>{this.renderWeatherCardTemp(forecast)}</>
                     )
                 }
             </div>
@@ -32,7 +59,7 @@ class Main extends Component {
     }
 
     // renders a single weather card
-    renderWeatherCard(forecast) {
+    renderWeatherCardTemp(forecast) {
         return (
             <div className="col-1 bg-info p-1 m-2">
                 <p>time: {forecast.forecastTimeUtc}</p>

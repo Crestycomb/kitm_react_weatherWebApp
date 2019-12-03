@@ -4,6 +4,7 @@
     <list default="true" id="7b13c0b7-c49e-4e8b-b41c-3d51e13d9393" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/app/app.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/app/app.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/main/main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/main/main.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +84,8 @@
       <workItem from="1575060116775" duration="1601000" />
       <workItem from="1575193734073" duration="1127000" />
       <workItem from="1575209670737" duration="3900000" />
-      <workItem from="1575272887727" duration="7738000" />
+      <workItem from="1575272887727" duration="8363000" />
+      <workItem from="1575375916942" duration="1592000" />
     </task>
     <servers />
   </component>
@@ -104,13 +106,17 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
+    <state x="520" y="252" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1575280700368">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="520" y="252" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1680.1050/-1378.376.1378.900@0.0.1680.1050" timestamp="1575280700368" />
     <state x="341" y="166" key="SettingsEditor" timestamp="1575274742335">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="341" y="166" key="SettingsEditor/0.0.1680.1050/-1378.376.1378.900@0.0.1680.1050" timestamp="1575274742335" />
-    <state x="536" y="347" key="com.intellij.ide.util.TipDialog" timestamp="1575272890326">
+    <state x="536" y="347" key="com.intellij.ide.util.TipDialog" timestamp="1575375931595">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="536" y="347" key="com.intellij.ide.util.TipDialog/0.0.1680.1050/-1378.376.1378.900@0.0.1680.1050" timestamp="1575272890326" />
+    <state x="536" y="347" key="com.intellij.ide.util.TipDialog/0.0.1680.1050/-1378.376.1378.900@0.0.1680.1050" timestamp="1575375931595" />
   </component>
 </project>
