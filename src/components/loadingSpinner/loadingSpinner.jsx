@@ -3,7 +3,7 @@ import styles from './loadingSpinner.css';
 
 const LoadingSpinner = () => (
     <div>
-        <i className="fa fa-spinner fa-spin" /> Loading...
+        <p>placeholder </p>
     </div>
 );
 

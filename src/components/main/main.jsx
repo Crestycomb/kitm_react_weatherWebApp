@@ -1,33 +1,88 @@
 import React, {Component} from 'react';
-import styles from './main.css';
-import {BrowserRouter, Switch, Route} from 'react-router-dom'
+import styles from './main.scss';
+import LoadingSpinner from "../loadingSpinner/loadingSpinner";
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+
+import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 
 
 class Main extends Component {
+    constructor() {
+        super();
+
+        this.state = {
+            dummyData: [
+                {
+                    weekday: "today",
+                    forecasts: [
+                        {
+                            airTemperature: 0,
+
+                        }
+                    ]
+                },
+                {
+                    weekday: "tomorrow",
+                    forecasts: [
+                        {
+                            airTemperature: 0,
+
+                        }
+                    ]
+                },
+            ]
+        };
+    }
+
     render() {
         return (
-            <>
-
+            <main className="container-fluid">
+                <FontAwesomeIcon icon="coffee" />
                 {/*create router*/}
+                <Router>
+                    <div className="row">
+                        {this.renderWeekDayCards(this.props.sortedData)}
+                    </div>
+                    <Switch>
+                        {this.generateRoutes(this.props.sortedData)}
+                    </Switch>
+                </Router>
+            </main>
+        )
+    }
 
-                {this.renderWeekDayCards(this.props.sortedData)}
-
-                {/*renders all the small cards*/}
-                <main className="container-fluid">
-                    {/* this.renderWeatherCardListTemp(this.props.data.forecastTimestamps) */}
-                </main>
+    generateRoutes(sortedData) {
+        return (
+            <>
+                {
+                    sortedData.map((day) => {
+                            return <Route exact path={'/' + day.date}>
+                                <div className="container-fluid"> {this.renderSortedWeekday(day)} <span
+                                    className="font-weight-bold">{day.date}</span></div>
+                            </Route>
+                        }
+                    )
+                }
             </>
         )
     }
 
-
-    renderSingleDayCard(weekday, date) {
+    renderSortedWeekday(day) {
         return (
-
-            <div className="float-left w-25 bg-secondary p-2">
-                {weekday} {date.slice(5, 10)}
+            <div className="row">
+                {
+                    day.forecasts.map((forecast) => {
+                        return <div className="col bg-secondary m-1">
+                            <p><span className="font-weight-bold">{forecast.forecastTimeUtc.slice(10,13)}</span>{ forecast.forecastTimeUtc.slice(14,16)}</p>
+                            <p>{forecast.airTemperature}°</p>
+                            <p>precip: {forecast.totalPrecipitation}</p>
+                            <p>direction: {forecast.windDirection}</p>
+                        </div>
+                    })
+                }
             </div>
-
         )
     }
 
@@ -36,37 +91,35 @@ class Main extends Component {
             <>
                 {
                     sortedData.map((day) => {
-                            return this.renderSingleDayCard(day.weekday, day.date)
+                            return <WeatherDay
+                                weekday={day.weekday} date={day.date}/>
                         }
                     )
                 }
             </>
         )
     }
+}
 
+class WeatherDay extends React.Component {
 
-    // renders the whole list of cards
-    renderWeatherCardListTemp(forecasts) {
+    renderSingleDayCard(weekday, date) {
         return (
-            <div className="row">
-                {
-                    forecasts.map((forecast) =>
-                        <>{this.renderWeatherCardTemp(forecast)}</>
-                    )
-                }
-            </div>
-        );
+
+            <>
+                {weekday} {date.slice(5, 10)}
+            </>
+
+        )
     }
 
-    // renders a single weather card
-    renderWeatherCardTemp(forecast) {
-        return (
-            <div className="col-1 bg-info p-1 m-2">
-                <p>time: {forecast.forecastTimeUtc}</p>
-                <p>temp: {forecast.airTemperature}</p>
-                <p>precip: {forecast.totalPrecipitation}</p>
-                <p>direction: {forecast.windDirection}</p>
 
+    render() {
+        return (
+            <div className="col bg-secondary p-2 m-1">
+                <Link to={"/" + this.props.date}>
+                    {this.renderSingleDayCard(this.props.weekday, this.props.date)}
+                </Link>
             </div>
         );
     }

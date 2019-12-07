@@ -2,9 +2,10 @@ import React, {Component} from 'react';
 
 import Header from '../header/header';
 import Main from '../main/main';
+import Nameform from '../nameform/nameform'
 import LoadingSpinner from "../loadingSpinner/loadingSpinner";
-import {BrowserRouter, Switch, Route} from 'react-router-dom'
-import styles from './app.css';
+
+import styles from './app.scss';
 
 
 class App extends Component {
@@ -20,6 +21,7 @@ class App extends Component {
         this.state = {
             hasErrors: null,
             currentLocation: "kaunas",
+            isLoading: true,
         };
     }
 
@@ -73,6 +75,9 @@ class App extends Component {
                 }
             }
         }
+
+        // turns off loading thingy
+        this.setState({isLoading: false});
         // console.log("result: ");
         // console.log(forecastsSorted);
         return forecastsSorted;
@@ -85,8 +90,10 @@ class App extends Component {
     };
 
     myCallback = (dataToParent) => {
+        // turns on loading thingy
+        this.setState({isLoading: true});
         let currentLocation = dataToParent + '/';
-        this.setState({currentLocation: dataToParent})
+        this.setState({currentLocation: dataToParent});
 
         let endpoint = this.cors + this.startPoint + this.places + currentLocation + this.forecasts + this.forecastType;
 
@@ -103,61 +110,22 @@ class App extends Component {
 
     render() {
         return (
-            <div className="container-fluid bg-light    ">
-                <NameForm callbackFromParent={this.myCallback}/>
+            <div className="container-fluid">
+                <Nameform callbackFromParent={this.myCallback}/>
 
-                <h5>{this.state.currentLocation}</h5>
-
+                <h5 className="text-capitalize"> {this.state.isLoading && "Loading..." || this.state.currentLocation} </h5>
 
                 {/*only renders this component if it has the data*/}
-                {this.state && this.state.sortedData &&
-                <>
-                    <Main
-                        data={this.state.data}
-                        sortedData={this.state.sortedData}
-                    />
-                </>
+                {
+                    this.state && this.state.sortedData &&
+                    <>
+                        <Main
+                            data={this.state.data}
+                            sortedData={this.state.sortedData}
+                        />
+                    </>
                 }
             </div>
-        );
-    }
-}
-
-class NameForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            value: '',
-            loading: false
-        };
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleChange(event) {
-        this.setState({value: event.target.value});
-    }
-
-    handleSubmit(event) {
-        this.setState(
-            {
-                newValue: this.state.value,
-            }, () =>
-                this.props.callbackFromParent(this.state.newValue), // here is where you put the callback
-        );
-        event.preventDefault();
-    }
-
-    render() {
-        return (
-            <form onSubmit={this.handleSubmit}>
-                <label>
-                    Name:
-                    <input type="text" value={this.state.value} onChange={this.handleChange}/>
-                </label>
-                <input type="submit" value="Submit"/>
-            </form>
         );
     }
 }
